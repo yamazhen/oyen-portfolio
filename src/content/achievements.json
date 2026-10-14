@@ -1,0 +1,35 @@
+[
+  {
+    "id": "dongseo",
+    "order": 1,
+    "title": "BSc Computer Science",
+    "org": "Dongseo University",
+    "when": "2023 - 2025 @ Busan",
+    "summary": "CGPA 4.12 / 4.5. Oustanding Student Award, 2025.",
+    "say": "i motivated him!"
+  },
+  {
+    "id": "gaia-x-tech-x-9",
+    "order": 2,
+    "title": "2nd place",
+    "org": "Gaia-X Tech-X & Hackathon #9",
+    "when": "2026 @ Athens",
+    "summary": "Selective-Disclosure Cross-Jurisdiction (SDCJ) credentials. The work went into the Gaia-X Danube release."
+  },
+  {
+    "id": "dive-2025",
+    "order": 3,
+    "title": "3rd place",
+    "org": "DIVE 2025 Hackathon",
+    "when": "2025 @ Busan",
+    "summary": "Track challenge, with a smartwatch app for coastal statistics."
+  },
+  {
+    "id": "kicsp",
+    "order": 4,
+    "title": "Excellent Paper Award",
+    "org": "KICSP Conference",
+    "when": "2024, 2025 @ Busan",
+    "summary": "Twice: automated question generation with Gemini, and an AI study-support desktop application."
+  }
+]

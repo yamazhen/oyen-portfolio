@@ -1,0 +1,162 @@
+.prose h3 {
+  max-width: 22em;
+  margin-top: 6px;
+  font-size: clampf(26px, 3.2vw, 34px);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose pre {
+  max-width: 62ch;
+  margin-top: 14px;
+}
+
+.prose li {
+  margin-top: 6px;
+}
+
+.prose strong {
+  font-weight: 800;
+}
+
+.prose code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--code-bg);
+  font-family: var(--mono);
+  font-size: 0.82em;
+}
+
+.prose pre {
+  padding: 16px 18px;
+  overflow-x: auto;
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  background: #fff;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.prose img {
+  width: 100%;
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.prose .caption {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.prose table {
+  width: 100%;
+  max-width: 760px;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.prose th {
+  padding: 8px 12px 8px 0;
+  border-bottom: 1.5px solid var(--ink);
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.prose td {
+  padding: 9px 12px 9px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.prose .ok,
+.prose .wip,
+.prose .no {
+  white-space: nowrap;
+}
+
+.prose .ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.prose .wip {
+  color: var(--beak);
+  font-weight: 600;
+}
+
+.prose .no {
+  color: var(--muted);
+}
+
+.prose ol.flow {
+  max-width: 68ch;
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  border-left: 1.5px solid var(--ink);
+}
+
+.prose .flow li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 22px 28px;
+  counter-increment: step;
+}
+
+.prose .flow li:last-child {
+  padding-bottom: 0;
+}
+
+.prose .flow li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: -13px;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: color(--ink);
+  color: var(--ice);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.prose .flow b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--beak);
+}
+
+/* temporary: delete after */
+.prose .todo {
+  padding: 12px 16px;
+  border: 1.5px dashed var(--beak);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: #9a4712;
+}

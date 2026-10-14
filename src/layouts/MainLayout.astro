@@ -1,0 +1,27 @@
+---
+import Head from "./Head.astro"
+import "../styles/reset.css"
+import "../styles/global.css"
+import "../styles/prose.css"
+
+interface Props {
+  title?: string
+  description?: string
+  oyen?: "scene" | "corner";
+}
+
+const {
+  title: "Bowen Chong",
+  description: "Bowen Chong's portfolio: full-stack developer working on dataspaces and verifiable credentials.",
+  oyen
+} = Astro.props
+---
+
+<html lang="en">
+	<head>
+    <Head title={title} description={description}/>
+	</head>
+  <body data-oyen={oyen}>
+    <slot/>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "circular-solution",
+    "order": 1,
+    "role": "Full-Stack Developer",
+    "company": "Circular Solution",
+    "period": "Oct 2025 - now",
+    "place": "on-site, Korea",
+    "summary": "Build and maintain Digital Product Passport platforms for the footwear and automotive industries, and build dataspaces within the Gaia-X, Pontus-X and Catena-X ecosystems. Also set up Gitlab CI/CD and monitoring across the company's projects.",
+    "say": "the current job!"
+  },
+  {
+    "id": "containerverse",
+    "order": 2,
+    "role": "Full-Stack Developer, part-time",
+    "company": "Containerverse",
+    "period": "Jul 2024 - Oct 2025",
+    "place": "remote, Malaysia",
+    "summary": "Built custom systems for client companies, from their requirements through to production, and maintained existing codebases. Among them, a broadband system for Sunway University students. Done alongside a full-time degree.",
+    "say": "while studying?"
+  }
+]

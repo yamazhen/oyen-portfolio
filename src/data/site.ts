@@ -1,7 +1,6 @@
 export const site = {
   name: "Bowen Chong",
   role: "Full-stack developer",
-  company: "Circular Solution",
   tagline: "Malaysian, based in South Korea, open to relocation.",
   links: [
     { label: "github", url: "https://github.com/yamazhen" },
@@ -12,7 +11,7 @@ export const site = {
   skills: [
     {
       title: "Languages",
-      text: "Java, Typescript, Javascript, Python, Go, Rust",
+      text: "Java, TypeScript, JavaScript, Python, Go, Rust",
     },
     {
       title: "Frameworks",
@@ -20,7 +19,7 @@ export const site = {
     },
     {
       title: "Infrastructure",
-      text: "Docker, Kubernetes, Terraform, Helm, Gitlab CI/CD, MySQL, PostgreSQL, MongoDB, SQLite",
+      text: "Docker, Kubernetes, Terraform, Helm, GitLab CI/CD, MySQL, PostgreSQL, MongoDB, SQLite",
     },
   ],
 };

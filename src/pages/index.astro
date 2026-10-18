@@ -1,16 +1,227 @@
 ---
+import { getCollection } from 'astro:content'
+import MainLayout from '../layouts/MainLayout.astro'
+import { site } from '../data/site'
+
+type Ordered = { data: { order: number } }
+const byOrder = (a: Ordered, b: Ordered) => a.data.order - b.data.order
+
+const experience = (await getCollection('experience')).sort(byOrder)
+const projects = (await getCollection('projects')).sort(byOrder)
+const achievements = (await getCollection('achievements')).sort(byOrder)
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout oyen="scene">
+  <main>
+    <header>
+      <h1>{site.name}</h1>
+      <p class="role">{site.role}</p>
+      <p class="line">{site.tagline}</p>
+      <nav class="links">
+        {site.links.map(({ label, url }) => (
+          <a href={url}>{label}</a>
+        ))}
+      </nav>
+    </header>
+
+    <h2>experience</h2>
+    <ul class="xp">
+      {experience.map(({ data }) => (
+        <li data-say={data.say}>
+          <b>
+            {data.role} <span>· {data.company}</span>
+          </b>
+          <span class="mono">
+            {data.period} · {data.place}
+          </span>
+          <p>{data.summary}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>selected work</h2>
+    <ul class="work">
+      {projects.map(({ id, data }) => (
+        <li>
+          <a href={`/projects/${id}/`} data-say={data.say}>
+            <b>{data.title}</b>
+            <span class:list={['mono', { win: data.highlight }]}>
+              {data.meta}
+            </span>
+            <p>{data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <h2>education and awards</h2>
+    <ul class="xp">
+      {achievements.map(({ data }) => (
+        <li data-say={data.say}>
+          <b>
+            {data.title} <span>· {data.org}</span>
+          </b>
+          <span class="mono">{data.when}</span>
+          <p>{data.summary}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>skills</h2>
+    <ul class="xp">
+      {site.skills.map(({ title, text }) => (
+        <li>
+          <b>{title}</b>
+          <p>{text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>about</h2>
+    <p class="now">
+      I'm from Malaysia and live in South Korea, where I build dataspace
+      software at Circular Solution: how organisations exchange product data and
+      prove who they are.
+    </p>
+    <p class="now">
+      Outside work I write Neovim plugins. One of them is named after Oyen, my
+      penguin, who is standing on the ice on this page.
+    </p>
+
+    <footer class="mono">
+      © {new Date().getFullYear()}
+      {site.name} · oyen is a real penguin. the plush kind.
+    </footer>
+  </main>
+</MainLayout>
+
+<style>
+  h1 {
+    width: min-content;
+    font-size: clamp(52px, 10vw, 112px);
+    line-height: 0.9;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+  }
+
+  .role {
+    margin-top: 22px;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .line {
+    max-width: 34ch;
+    margin-top: 10px;
+    font-size: 20px;
+    color: var(--muted);
+  }
+
+  .work,
+  .xp {
+    padding: 0;
+    list-style: none;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .work a,
+  .xp li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 20px;
+    align-items: baseline;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .work a {
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .work a:hover,
+  .work a:focus-visible {
+    transform: translateX(12px);
+  }
+
+  .work b {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .work a:hover b,
+  .work .win {
+    color: var(--beak);
+  }
+
+  .xp b {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .xp b span {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .work p,
+  .xp p {
+    grid-column: 1;
+    color: var(--muted);
+  }
+
+  .work p {
+    max-width: 48ch;
+  }
+
+  .xp p {
+    max-width: 52ch;
+  }
+
+  .work .mono,
+  .xp .mono {
+    grid-row: 1;
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .now {
+    max-width: 52ch;
+    font-size: 20px;
+  }
+
+  .now + .now {
+    margin-top: 14px;
+    color: var(--muted);
+  }
+
+  footer {
+    margin-top: 84px;
+  }
+
+  @media (max-width: 1100px) {
+    main {
+      max-width: 740px;
+      padding-top: max(46vh, 300px);
+      padding-bottom: 160px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .work a,
+    .xp li {
+      grid-template-columns: 1fr;
+    }
+
+    .work .mono,
+    .xp .mono {
+      grid-row: auto;
+      grid-column: 1;
+      text-align: left;
+    }
+  }
+</style>

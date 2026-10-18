@@ -1,11 +1,11 @@
-import { defineCollection } from "astro/content/config";
-import { file, glob } from "astro/loaders";
-import { z } from "astro/zod";
+import { defineCollection } from 'astro/content/config'
+import { file, glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 
-const link = z.object({ label: z.string(), url: z.string() });
+const link = z.object({ label: z.string(), url: z.string() })
 
 const projects = defineCollection({
-  loader: glob({ base: "./src/content/projects", pattern: "*.md" }),
+  loader: glob({ base: './src/content/projects', pattern: '*.md' }),
   schema: z.object({
     title: z.string(),
     order: z.number(),
@@ -17,10 +17,10 @@ const projects = defineCollection({
     links: z.array(link),
     say: z.string(),
   }),
-});
+})
 
 const experience = defineCollection({
-  loader: file("src/content/experience.json"),
+  loader: file('src/content/experience.json'),
   schema: z.object({
     order: z.number(),
     role: z.string(),
@@ -30,18 +30,18 @@ const experience = defineCollection({
     summary: z.string(),
     say: z.string(),
   }),
-});
+})
 
 const achievements = defineCollection({
-  loader: file("src/content/achievements.json"),
+  loader: file('src/content/achievements.json'),
   schema: z.object({
     order: z.number(),
     title: z.string(),
     org: z.string(),
     when: z.string(),
     summary: z.string(),
-    say: z.string(),
+    say: z.string().optional(),
   }),
-});
+})
 
-export const collections = { projects, experience, achievements };
+export const collections = { projects, experience, achievements }

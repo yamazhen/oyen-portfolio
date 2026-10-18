@@ -89,8 +89,7 @@ const achievements = (await getCollection('achievements')).sort(byOrder)
     </p>
 
     <footer class="mono">
-      © {new Date().getFullYear()}
-      {site.name} · oyen is a real penguin. the plush kind.
+      {`© ${new Date().getFullYear()} ${site.name} · oyen is a real penguin. the plush kind.`}
     </footer>
   </main>
 </MainLayout>
@@ -203,7 +202,8 @@ const achievements = (await getCollection('achievements')).sort(byOrder)
   @media (max-width: 1100px) {
     main {
       max-width: 740px;
-      padding-top: max(46vh, 300px);
+      margin-top: var(--scene-band);
+      padding-top: 0;
       padding-bottom: 160px;
     }
   }

@@ -124,12 +124,16 @@ const { mode } = Astro.props
   }
 
   @media (max-width: 1100px) {
+    :global(:root) {
+      --corner-top: calc(env(safe-area-inset-top, 0px) + 8px);
+      --corner-height: 146px;
+    }
+
     #scene,
     .scrim {
       position: absolute;
       inset: 0 0 auto 0;
-      height: 46vh;
-      min-height: 300px;
+      height: var(--scene-band);
     }
 
     .scrim {
@@ -148,15 +152,22 @@ const { mode } = Astro.props
 
     #mini {
       display: block;
+      top: var(--corner-top);
       right: 6px;
+      bottom: auto;
       width: 120px;
-      height: 146px;
+      height: var(--corner-height);
+      transform: translateY(-40px);
     }
 
     #bubble.corner {
       position: fixed;
+      top: calc(var(--corner-top) + var(--corner-height));
       right: 14px;
-      bottom: 150px;
+      bottom: auto;
+      border-radius: 14px 2px 14px 14px;
+      transform: translateY(-8px) scale(0.96);
+      transform-origin: top right;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { QUIPS } from '../../src/scripts/oyen/lines'
-import { bubble } from './helpers'
+import { bubble, waitForGreeting } from './helpers'
 
 const scrollTo = (page: import('@playwright/test').Page, y: 'top' | 'bottom') =>
   page.evaluate(
@@ -27,7 +27,18 @@ test('oyen stands at the top, then waits in the corner once scrolled past', asyn
   await expect(corner).not.toHaveClass(/show/)
 })
 
+test('tapping oyen at the top makes him talk', async ({ page }) => {
+  await waitForGreeting(page)
+  const box = (await page.locator('#scene').boundingBox())!
+
+  await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height * 0.55)
+
+  await expect(bubble(page)).toHaveText(QUIPS[0])
+  await expect(bubble(page)).toHaveClass(/show/)
+})
+
 test('tapping oyen in the corner makes him talk', async ({ page }) => {
+  await waitForGreeting(page)
   await scrollTo(page, 'bottom')
   const corner = page.locator('#mini')
   await expect(corner).toHaveClass(/show/)

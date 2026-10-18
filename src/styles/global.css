@@ -9,6 +9,8 @@
   --ok: #1f8a5b;
   --sans: var(--font-bricolage);
   --mono: var(--font-jetbrains-mono);
+  --intro-height: 300px;
+  --scene-band: max(240px, min(calc(100svh - var(--intro-height)), 50svh));
 }
 
 html {

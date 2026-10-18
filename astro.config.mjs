@@ -7,6 +7,10 @@ import sitemap from '@astrojs/sitemap'
 export default defineConfig({
   site: 'https://yamazhen.dev',
   integrations: [sitemap()],
+  vite: {
+    optimizeDeps: { include: ['three'] },
+  },
+  devToolbar: { enabled: false },
   fonts: [
     {
       provider: fontProviders.google(),

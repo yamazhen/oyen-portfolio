@@ -6,8 +6,8 @@
   --beak: #f26a1b;
   --code-bg: #dfe8ee;
   --ok: #1f8a5b;
-  --sans: 'Bricolage Grotesque', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sans: var(--font-bricolage);
+  --mono: var(--font-jetbrains-mono);
 }
 
 html {

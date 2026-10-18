@@ -16,7 +16,12 @@ const { mode } = Astro.props
 <canvas id="mini" aria-hidden="true"></canvas>
 
 <script>
-  import '../scripts/oyen'
+  const start = () => import('../scripts/oyen')
+  const whenIdle = () =>
+    'requestIdleCallback' in window
+      ? requestIdleCallback(start)
+      : setTimeout(start)
+  addEventListener('load', whenIdle, { once: true })
 </script>
 
 <style>

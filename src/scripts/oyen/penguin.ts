@@ -179,11 +179,7 @@ function createFaceMaterial() {
   return material
 }
 
-function createHead(
-  cream: THREE.Material,
-  sage: THREE.Material,
-  hood: THREE.Material
-) {
+function createHead(sage: THREE.Material, hood: THREE.Material) {
   const head = new THREE.Group()
   head.position.fromArray(HEAD.position)
 
@@ -259,7 +255,7 @@ export function createPenguin(): Penguin {
   const sage = matte(COLORS.sage)
   const hood = matte(COLORS.hood)
 
-  const { head, eyes } = createHead(cream, sage, hood)
+  const { head, eyes } = createHead(sage, hood)
 
   const wings = SIDES.map((side) => {
     const part = new THREE.Group()

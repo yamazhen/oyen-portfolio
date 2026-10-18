@@ -2,9 +2,7 @@
 import { getCollection } from 'astro:content'
 import MainLayout from '../layouts/MainLayout.astro'
 import { site } from '../data/site'
-
-type Ordered = { data: { order: number } }
-const byOrder = (a: Ordered, b: Ordered) => a.data.order - b.data.order
+import { byOrder } from '../lib/order'
 
 const experience = (await getCollection('experience')).sort(byOrder)
 const projects = (await getCollection('projects')).sort(byOrder)

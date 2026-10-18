@@ -16,6 +16,10 @@
   margin-top: 14px;
 }
 
+.prose ul {
+  padding-left: 1.1em;
+}
+
 .prose li {
   margin-top: 6px;
 }
@@ -49,12 +53,21 @@
   font-size: inherit;
 }
 
-.prose img {
+.prose img,
+.prose > svg {
   width: 100%;
   margin-top: 28px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #fff;
+}
+
+.prose > svg {
+  padding: 20px;
+}
+
+.prose > svg text {
+  font-family: var(--mono) !important;
 }
 
 .prose .caption {
@@ -113,7 +126,9 @@
   padding: 0;
   list-style: none;
   counter-reset: step;
-  border-left: 1.5px solid var(--ink);
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-rows: repeat(var(--gaps, 0), 1fr) auto;
 }
 
 .prose .flow li {
@@ -123,13 +138,19 @@
   counter-increment: step;
 }
 
-.prose .flow li:last-child {
-  padding-bottom: 0;
+.prose .flow li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1.5px;
+  border-left: 1.5px solid var(--ink);
 }
 
 .prose .flow li::before {
   content: counter(step);
   position: absolute;
+  z-index: 1;
   top: 0;
   left: -13px;
   display: grid;

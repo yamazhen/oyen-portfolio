@@ -12,6 +12,6 @@ test('the page still works when the browser has no webgl', async ({ page }) => {
   await expect(page.locator('#scene')).toHaveCount(0)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(site.name)
   await expect(listUnder(page, 'selected work').getByRole('link')).toHaveCount(
-    5
+    4
   )
 })

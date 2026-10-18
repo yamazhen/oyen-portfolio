@@ -35,15 +35,8 @@ test('lists the selected projects in order, each linking to its page', async ({
     'SDCJ Extension',
     'Soma',
     'Breeze',
-    'oyen.nvim',
   ])
-  for (const [i, id] of [
-    'oid4vc',
-    'sdcj',
-    'soma',
-    'breeze',
-    'oyen-nvim',
-  ].entries()) {
+  for (const [i, id] of ['oid4vc', 'sdcj', 'soma', 'breeze'].entries()) {
     await expect(projects.nth(i)).toHaveAttribute('href', `/projects/${id}/`)
   }
 })

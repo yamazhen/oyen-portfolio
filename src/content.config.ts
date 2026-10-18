@@ -39,6 +39,7 @@ const achievements = defineCollection({
     title: z.string(),
     org: z.string(),
     when: z.string(),
+    place: z.string(),
     summary: z.string(),
     say: z.string().optional(),
   }),

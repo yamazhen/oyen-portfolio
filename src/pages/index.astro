@@ -28,11 +28,10 @@ const achievements = (await getCollection('achievements')).sort(byOrder)
     <ul class="xp">
       {experience.map(({ data }) => (
         <li data-say={data.say}>
-          <b>
-            {data.role} <span>· {data.company}</span>
-          </b>
-          <span class="mono">
-            {data.period} · {data.place}
+          <b>{data.role}</b>
+          <span class="mono">{data.period}</span>
+          <span class="where">
+            {data.company} · {data.place}
           </span>
           <p>{data.summary}</p>
         </li>
@@ -58,10 +57,11 @@ const achievements = (await getCollection('achievements')).sort(byOrder)
     <ul class="xp">
       {achievements.map(({ data }) => (
         <li data-say={data.say}>
-          <b>
-            {data.title} <span>· {data.org}</span>
-          </b>
+          <b>{data.title}</b>
           <span class="mono">{data.when}</span>
+          <span class="where">
+            {data.org} · {data.place}
+          </span>
           <p>{data.summary}</p>
         </li>
       ))}
@@ -163,23 +163,20 @@ const achievements = (await getCollection('achievements')).sort(byOrder)
     line-height: 1.2;
   }
 
-  .xp b span {
-    font-weight: 400;
-    color: var(--muted);
+  .where,
+  .work p,
+  .xp p {
+    grid-column: 1 / -1;
+    max-width: 65ch;
+  }
+
+  .where {
+    color: var(--beak);
   }
 
   .work p,
   .xp p {
-    grid-column: 1;
     color: var(--muted);
-  }
-
-  .work p {
-    max-width: 48ch;
-  }
-
-  .xp p {
-    max-width: 52ch;
   }
 
   .work .mono,

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { QUIPS } from '../../src/scripts/oyen/lines'
 import { bubble } from './helpers'
 
 const scrollTo = (page: import('@playwright/test').Page, y: 'top' | 'bottom') =>
@@ -32,7 +33,7 @@ test('tapping oyen in the corner makes him talk', async ({ page }) => {
   await expect(corner).toHaveClass(/show/)
 
   await corner.tap()
-  await expect(bubble(page)).toHaveText('noot.')
+  await expect(bubble(page)).toHaveText(QUIPS[0])
   await expect(bubble(page)).toHaveClass(/corner/)
   await expect(bubble(page)).toHaveClass(/show/)
 })

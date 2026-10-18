@@ -1,12 +1,12 @@
 import * as THREE from 'three'
 import { createBubble } from './bubble'
+import { GREETING, QUIPS } from './lines'
 import { createMotion } from './motion'
 import { createPenguin } from './penguin'
 import { createCornerView, createMainView } from './views'
 import { createWorld } from './world'
 
-const GREETING = { text: "hi. i'm oyen.", delayMs: 900 }
-const QUIPS = ['noot!', 'my name is oyen', 'hehe', 'hmm?']
+const GREETING_DELAY_MS = 900
 const MAX_FRAME_SECONDS = 0.05
 const SPEECH_ANCHOR = { x: -0.85, aboveCentre: 1.75, z: 0.5 }
 
@@ -73,7 +73,7 @@ function start() {
   })
   miniEl.addEventListener('click', sayQuip)
 
-  if (main) setTimeout(() => bubble.say(GREETING.text), GREETING.delayMs)
+  if (main) setTimeout(() => bubble.say(GREETING), GREETING_DELAY_MS)
 
   function frame() {
     requestAnimationFrame(frame)

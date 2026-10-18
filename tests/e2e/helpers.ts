@@ -1,6 +1,5 @@
 import { expect, type Page } from '@playwright/test'
-
-export const GREETING = "hi. i'm oyen."
+import { GREETING } from '../../src/scripts/oyen/lines'
 
 export const listUnder = (page: Page, heading: string) =>
   page.locator(`h2:text-is("${heading}") + ul`)

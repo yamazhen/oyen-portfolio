@@ -51,13 +51,7 @@ const IDLE = {
   rock: { speed: 1.6, amount: 0.035 },
 }
 
-const LOOK = {
-  yaw: 1.5,
-  pitch: 0.8,
-  bodyTurn: 0.5,
-  nearYaw: -0.95,
-  nearPitch: -0.28,
-}
+const LOOK = { yaw: 1.5, pitch: 0.8, bodyTurn: 0.5 }
 
 const TILT = { roll: 0.4, yaw: 0.18, chinUp: 0.12 }
 const SWAY = { cycles: 2, roll: 0.12, headLag: 0.6 }
@@ -112,7 +106,6 @@ const randomSide = () => (Math.random() < 0.5 ? -1 : 1)
 
 export type MotionInput = {
   look: { x: number; y: number }
-  near: boolean
   scrollDelta: number
   baseYaw: number
 }
@@ -224,7 +217,7 @@ export function createMotion(
   function update(
     t: number,
     dt: number,
-    { look, near, scrollDelta, baseYaw }: MotionInput
+    { look, scrollDelta, baseYaw }: MotionInput
   ) {
     now = t
     const progress = reactionProgress(t)
@@ -245,12 +238,8 @@ export function createMotion(
       cycle(progress, LOOK_AROUND.cycles) * LOOK_AROUND.yaw * amount('look')
 
     const headYaw =
-      (near ? LOOK.nearYaw : look.x * LOOK.yaw) +
-      lookAround +
-      actSide * tilting * TILT.yaw
-    const headPitch =
-      (near ? LOOK.nearPitch : Math.min(0, look.y * LOOK.pitch)) -
-      tilting * TILT.chinUp
+      look.x * LOOK.yaw + lookAround + actSide * tilting * TILT.yaw
+    const headPitch = Math.min(0, look.y * LOOK.pitch) - tilting * TILT.chinUp
     head.rotation.y = lerp(head.rotation.y, headYaw, FOLLOW.head)
     head.rotation.x = lerp(head.rotation.x, headPitch, FOLLOW.head)
     head.rotation.z =

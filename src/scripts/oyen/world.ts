@@ -50,8 +50,46 @@ const SUN_DISC = { radius: 5.5, segments: 48 }
 
 type Swell = typeof SWELL.x
 
-const wave = (offset: number, { frequency, speed, height }: Swell, t: number) =>
-  Math.sin(offset * frequency + t * speed) * height
+const swellVector = ({ frequency, speed, height }: Swell) =>
+  new THREE.Vector3(frequency, speed, height)
+
+function createSeaMaterial(time: { value: number }) {
+  const material = new THREE.MeshStandardMaterial({
+    color: COLORS.sea,
+    roughness: SEA.roughness,
+  })
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, {
+      uTime: time,
+      uSwellX: { value: swellVector(SWELL.x) },
+      uSwellZ: { value: swellVector(SWELL.z) },
+    })
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        `#include <common>
+        uniform float uTime;
+        uniform vec3 uSwellX, uSwellZ;`
+      )
+      .replace(
+        '#include <beginnormal_vertex>',
+        `#include <beginnormal_vertex>
+        float phaseX = position.x * uSwellX.x + uTime * uSwellX.y;
+        float phaseZ = position.z * uSwellZ.x + uTime * uSwellZ.y;
+        objectNormal = normalize(vec3(
+          -uSwellX.z * uSwellX.x * cos(phaseX),
+          1.0,
+          -uSwellZ.z * uSwellZ.x * cos(phaseZ)
+        ));`
+      )
+      .replace(
+        '#include <begin_vertex>',
+        `#include <begin_vertex>
+        transformed.y += uSwellX.z * sin(phaseX) + uSwellZ.z * sin(phaseZ);`
+      )
+  }
+  return material
+}
 
 export type World = ReturnType<typeof createWorld>
 
@@ -104,13 +142,8 @@ export function createWorld() {
   )
   seaGeometry.rotateX(-Math.PI / 2)
   seaGeometry.translate(0, 0, -SEA.distance)
-  const sea = new THREE.Mesh(
-    seaGeometry,
-    new THREE.MeshStandardMaterial({
-      color: COLORS.sea,
-      roughness: SEA.roughness,
-    })
-  )
+  const seaTime = { value: 0 }
+  const sea = new THREE.Mesh(seaGeometry, createSeaMaterial(seaTime))
   sea.position.y = SEA_LEVEL
 
   const icebergGeometry = new THREE.IcosahedronGeometry()
@@ -134,17 +167,8 @@ export function createWorld() {
 
   scene.add(sky, sun, spot, sea, ...icebergs, sunDisc)
 
-  const seaPosition = seaGeometry.attributes.position
-  function swell(t: number) {
-    for (let i = 0; i < seaPosition.count; i++) {
-      seaPosition.setY(
-        i,
-        wave(seaPosition.getX(i), SWELL.x, t) +
-          wave(seaPosition.getZ(i), SWELL.z, t)
-      )
-    }
-    seaPosition.needsUpdate = true
-    seaGeometry.computeVertexNormals()
+  const swell = (t: number) => {
+    seaTime.value = t
   }
 
   return { scene, spot, shadow, sunDisc, swell }

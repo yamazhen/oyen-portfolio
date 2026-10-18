@@ -7,7 +7,6 @@ const FRAME = 1 / 60
 
 const still: MotionInput = {
   look: { x: 0, y: 0 },
-  near: false,
   scrollDelta: 0,
   baseYaw: 0,
 }

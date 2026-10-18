@@ -6,7 +6,7 @@ import { createCornerView, createMainView } from './views'
 import { createWorld } from './world'
 
 const GREETING = { text: "hi. i'm oyen.", delayMs: 900 }
-const QUIPS = ['noot.', "i'm oyen.", "i live on bowen's desk.", 'be nice.']
+const QUIPS = ['noot!', 'my name is oyen', 'hehe', 'hmm?']
 const MAX_FRAME_SECONDS = 0.05
 const SPEECH_ANCHOR = { x: -0.85, aboveCentre: 1.75, z: 0.5 }
 
@@ -32,7 +32,6 @@ function start() {
   const motion = createMotion(penguin, world.shadow, reduce)
   const timer = new THREE.Timer()
   const look = { x: 0, y: 0 }
-  let near = false
   let inCorner = false
   let lastScroll = scrollY
   let quip = 0
@@ -54,11 +53,8 @@ function start() {
   addEventListener('pointermove', (e) => {
     if (e.pointerType !== 'mouse') return
     const head = activeView().headPoint()
-    const dx = e.clientX - head.x
-    const dy = e.clientY - head.y
-    near = Math.hypot(dx, dy) < activeView().nearRadius()
-    look.x = THREE.MathUtils.clamp(dx / innerWidth, -1, 1)
-    look.y = THREE.MathUtils.clamp(dy / innerHeight, -1, 1)
+    look.x = THREE.MathUtils.clamp((e.clientX - head.x) / innerWidth, -1, 1)
+    look.y = THREE.MathUtils.clamp((e.clientY - head.y) / innerHeight, -1, 1)
   })
 
   document.querySelectorAll<HTMLElement>('[data-say]').forEach((el) => {
@@ -89,7 +85,6 @@ function start() {
 
     motion.update(t, dt, {
       look,
-      near,
       scrollDelta,
       baseYaw: main?.layout.baseYaw ?? 0,
     })

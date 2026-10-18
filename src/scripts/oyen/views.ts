@@ -16,15 +16,27 @@ const SUN_PLACEMENT = {
 }
 
 const SCROLLED_AWAY_PX = 60
-const NEAR_RADIUS = 1.2
 const BODY_HIT = { belowHead: 0.9, radius: 1.9 }
 
 const CORNER_CAMERA = { far: 50, height: 0.9, distance: 9.6, targetY: 0.7 }
 const CORNER_FALLBACK_SIZE = { width: 120, height: 146 }
 const CORNER_HEAD_HEIGHT = 0.36
-const CORNER_NEAR_RADIUS = 0.3
 
 const halfHeightAt = (distance: number) => Math.tan(HALF_FOV) * distance
+
+function renderWhenCompiled(
+  renderer: THREE.WebGLRenderer,
+  scene: THREE.Scene,
+  camera: THREE.Camera
+) {
+  let compiled = false
+  renderer.compileAsync(scene, camera).then(() => {
+    compiled = true
+  })
+  return () => {
+    if (compiled) renderer.render(scene, camera)
+  }
+}
 
 function makeRenderer(canvas?: HTMLCanvasElement) {
   try {
@@ -52,6 +64,7 @@ export function createMainView(
   const camera = new THREE.PerspectiveCamera(FOV, 1, CAMERA.near, CAMERA.far)
   const layout = { wide: false, ppu: 0, baseYaw: 0 }
   const probe = new THREE.Vector3()
+  const render = renderWhenCompiled(renderer, scene, camera)
 
   const resize = () => {
     const width = el.clientWidth
@@ -105,10 +118,9 @@ export function createMainView(
     toScreen,
     headPoint,
     hits,
-    nearRadius: () => layout.ppu * NEAR_RADIUS,
+    render,
     scrolledAway: () =>
       !layout.wide && el.getBoundingClientRect().bottom < SCROLLED_AWAY_PX,
-    render: () => renderer.render(scene, camera),
   }
 }
 
@@ -126,6 +138,7 @@ export function createCornerView(
   camera.position.set(0, CORNER_CAMERA.height, CORNER_CAMERA.distance)
   camera.lookAt(0, CORNER_CAMERA.targetY, 0)
   let renderer: THREE.WebGLRenderer | null | undefined
+  let render = () => {}
 
   function resize() {
     if (!renderer) return
@@ -139,6 +152,7 @@ export function createCornerView(
   function available() {
     if (renderer === undefined) {
       renderer = makeRenderer(canvas)
+      if (renderer) render = renderWhenCompiled(renderer, scene, camera)
       resize()
     }
     return !!renderer
@@ -156,8 +170,7 @@ export function createCornerView(
     resize,
     available,
     headPoint,
-    nearRadius: () => canvas.clientWidth * CORNER_NEAR_RADIUS,
     show: (visible: boolean) => canvas.classList.toggle('show', visible),
-    render: () => renderer?.render(scene, camera),
+    render: () => render(),
   }
 }

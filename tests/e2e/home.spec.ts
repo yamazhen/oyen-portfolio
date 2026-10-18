@@ -48,6 +48,20 @@ test('lists the selected projects in order, each linking to its page', async ({
   }
 })
 
+test('oyen loads without errors', async ({ page }) => {
+  const errors: string[] = []
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text())
+  })
+  page.on('pageerror', (error) => errors.push(error.message))
+
+  await page.reload()
+  await waitForGreeting(page)
+  await expect(page.locator('#scene canvas')).toBeVisible()
+
+  expect(errors).toEqual([])
+})
+
 test('oyen greets visitors and then goes quiet', async ({ page }) => {
   await waitForGreeting(page)
   await expect(bubble(page)).toHaveClass(/show/)

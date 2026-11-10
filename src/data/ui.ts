@@ -11,6 +11,11 @@ export const projectPath = (id: string) => `/${id.replace('/', '/projects/')}/`
 
 export const projectSlug = (id: string) => id.split('/')[1]
 
+export const inLang =
+  (lang: Lang) =>
+  ({ id }: { id: string }) =>
+    id.startsWith(`${lang}/`)
+
 export const localize = <T extends { ko?: object }>(data: T, lang: Lang) =>
   lang === 'ko' ? { ...data, ...data.ko } : data
 

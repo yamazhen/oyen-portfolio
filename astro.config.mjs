@@ -4,6 +4,7 @@ import { defineConfig, fontProviders } from 'astro/config'
 import { unified } from '@astrojs/markdown-remark'
 import sitemap from '@astrojs/sitemap'
 import rehypeMermaid from 'rehype-mermaid'
+import { langs } from './src/data/ui'
 
 const INK = '#14202b'
 const ICE = '#eef3f6'
@@ -71,8 +72,11 @@ export default defineConfig({
   site: 'https://yamazhen.dev',
   integrations: [
     sitemap({
-      filter: (page) => /\/(en|ko)\//.test(page),
-      i18n: { defaultLocale: 'en', locales: { en: 'en', ko: 'ko' } },
+      filter: (page) => langs.some((lang) => page.includes(`/${lang}/`)),
+      i18n: {
+        defaultLocale: 'en',
+        locales: Object.fromEntries(langs.map((lang) => [lang, lang])),
+      },
     }),
   ],
   vite: {
@@ -108,6 +112,7 @@ export default defineConfig({
       name: 'Noto Sans KR',
       cssVariable: '--font-noto-kr',
       weights: ['100 900'],
+      styles: ['normal'],
       fallbacks: [],
     },
     {
@@ -115,6 +120,7 @@ export default defineConfig({
       name: 'Nanum Gothic Coding',
       cssVariable: '--font-ko-mono',
       weights: [400],
+      styles: ['normal'],
       fallbacks: [],
     },
   ],

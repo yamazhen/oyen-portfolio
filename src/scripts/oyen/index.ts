@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { createBubble } from './bubble'
+import type { Lang } from '../../data/ui'
 import { LINES } from './lines'
 import { createMotion } from './motion'
 import { createPenguin } from './penguin'
@@ -14,7 +15,7 @@ const sceneEl = document.getElementById('scene')
 const bubbleEl = document.getElementById('bubble')!
 const miniEl = document.getElementById('mini') as HTMLCanvasElement
 const { greeting, quips } =
-  LINES[document.documentElement.lang as keyof typeof LINES] ?? LINES.en
+  LINES[document.documentElement.lang as Lang] ?? LINES.en
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 
 function start() {

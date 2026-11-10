@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 import LangSwitch from '../../components/LangSwitch.astro'
 import MainLayout from '../../layouts/MainLayout.astro'
 import { site } from '../../data/site'
-import { langs, localize, projectPath, ui } from '../../data/ui'
+import { inLang, langs, localize, projectPath, ui } from '../../data/ui'
 import { byOrder } from '../../lib/order'
 
 export const getStaticPaths = () =>
@@ -14,13 +14,11 @@ const t = ui[lang]
 const { role, tagline } = localize(site, lang)
 const experience = (await getCollection('experience'))
   .sort(byOrder)
-  .map(({ data }) => ({ data: localize(data, lang) }))
-const projects = (
-  await getCollection('projects', ({ id }) => id.startsWith(`${lang}/`))
-).sort(byOrder)
+  .map(({ data }) => localize(data, lang))
+const projects = (await getCollection('projects', inLang(lang))).sort(byOrder)
 const achievements = (await getCollection('achievements'))
   .sort(byOrder)
-  .map(({ data }) => ({ data: localize(data, lang) }))
+  .map(({ data }) => localize(data, lang))
 const skills = site.skills.map((skill) => localize(skill, lang))
 ---
 
@@ -40,7 +38,7 @@ const skills = site.skills.map((skill) => localize(skill, lang))
 
     <h2>{t.experience}</h2>
     <ul class="xp">
-      {experience.map(({ data }) => (
+      {experience.map((data) => (
         <li data-say={data.say}>
           <b>{data.role}</b>
           <span class="mono">{data.period}</span>
@@ -69,7 +67,7 @@ const skills = site.skills.map((skill) => localize(skill, lang))
 
     <h2>{t.awards}</h2>
     <ul class="xp">
-      {achievements.map(({ data }) => (
+      {achievements.map((data) => (
         <li data-say={data.say}>
           <b>{data.title}</b>
           <span class="mono">{data.when}</span>

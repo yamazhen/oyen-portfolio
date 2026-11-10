@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 import { Window, type Document } from 'happy-dom'
 import { beforeAll, describe, expect, it } from 'vitest'
 import Home from '../../src/pages/[lang]/index.astro'
-import { projectPath } from '../../src/data/ui'
+import { inLang, projectPath } from '../../src/data/ui'
 
 type Ordered = { data: { order: number } }
 const inOrder = <T extends Ordered>(entries: T[]) =>
@@ -50,9 +50,7 @@ describe('home page', () => {
   })
 
   it('links every project to its own page, in order', async () => {
-    const projects = inOrder(
-      await getCollection('projects', ({ id }) => id.startsWith('en/'))
-    )
+    const projects = inOrder(await getCollection('projects', inLang('en')))
     const links = itemsUnder('selected work').map((li) => li.querySelector('a'))
 
     expect(links.map((a) => a?.getAttribute('href'))).toEqual(
@@ -64,9 +62,7 @@ describe('home page', () => {
   })
 
   it('marks award-winning projects', async () => {
-    const projects = inOrder(
-      await getCollection('projects', ({ id }) => id.startsWith('en/'))
-    )
+    const projects = inOrder(await getCollection('projects', inLang('en')))
     const marked = itemsUnder('selected work').map(
       (li) => !!li.querySelector('.win')
     )

@@ -10,7 +10,7 @@ const { lang: current, side = false } = Astro.props
 const href = (lang: Lang) => localePath(Astro.url.pathname, lang)
 ---
 
-<div class:list={['lang', { side }]}>
+<div class:list={['lang', 'mono', { side }]}>
   <details>
     <summary>
       {languages[current]}
@@ -32,7 +32,7 @@ const href = (lang: Lang) => localePath(Astro.url.pathname, lang)
       ))}
     </ul>
   </details>
-  <select aria-label="language" autocomplete="off">
+  <select class="pill" aria-label="language" autocomplete="off">
     {langs.map((lang) => (
       <option value={href(lang)} lang={lang} selected={lang === current}>
         {languages[lang]}
@@ -57,15 +57,12 @@ const href = (lang: Lang) => localePath(Astro.url.pathname, lang)
   .lang {
     position: relative;
     width: max-content;
-    font-family: var(--mono);
-    font-size: 13px;
   }
 
   summary {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--muted);
     list-style: none;
     opacity: 0.55;
     cursor: pointer;
@@ -155,14 +152,11 @@ const href = (lang: Lang) => localePath(Astro.url.pathname, lang)
 
     select {
       display: block;
-      padding: 5px 30px 5px 12px;
-      border: 1.5px solid var(--ink);
-      border-radius: 999px;
+      padding-right: 30px;
       appearance: none;
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2314202b' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")
         right 12px center / 10px 6px no-repeat;
       color: var(--ink);
-      font: inherit;
     }
   }
 </style>

@@ -3,13 +3,13 @@ import { getCollection, render } from 'astro:content'
 import LangSwitch from '../../../components/LangSwitch.astro'
 import MainLayout from '../../../layouts/MainLayout.astro'
 import { site } from '../../../data/site'
-import { langs, projectPath, projectSlug, ui } from '../../../data/ui'
+import { inLang, langs, projectPath, projectSlug, ui } from '../../../data/ui'
 import { byOrder } from '../../../lib/order'
 
 export async function getStaticPaths() {
   const projects = (await getCollection('projects')).sort(byOrder)
   return langs.flatMap((lang) => {
-    const own = projects.filter(({ id }) => id.startsWith(`${lang}/`))
+    const own = projects.filter(inLang(lang))
     return own.map((project, i) => ({
       params: { lang, id: projectSlug(project.id) },
       props: { lang, project, previous: own[i - 1], next: own[i + 1] },
@@ -88,11 +88,6 @@ const { Content } = await render(project)
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 44px;
-  }
-
-  .top :global(.lang ul) {
-    right: -13px;
-    left: auto;
   }
 
   .back {
@@ -187,10 +182,12 @@ const { Content } = await render(project)
     .top {
       justify-content: flex-start;
     }
+  }
 
+  @media (min-width: 1101px) {
     .top :global(.lang ul) {
-      right: auto;
-      left: -13px;
+      right: -13px;
+      left: auto;
     }
   }
 

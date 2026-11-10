@@ -1,0 +1,239 @@
+---
+import { getCollection } from 'astro:content'
+import LangSwitch from '../../components/LangSwitch.astro'
+import MainLayout from '../../layouts/MainLayout.astro'
+import { site } from '../../data/site'
+import { langs, localize, ui } from '../../data/ui'
+import { byOrder } from '../../lib/order'
+
+export const getStaticPaths = () =>
+  langs.map((lang) => ({ params: { lang }, props: { lang } }))
+
+const { lang } = Astro.props
+const t = ui[lang]
+const { role, tagline } = localize(site, lang)
+const experience = (await getCollection('experience'))
+  .sort(byOrder)
+  .map(({ data }) => ({ data: localize(data, lang) }))
+const projects = (
+  await getCollection('projects', ({ id }) => id.startsWith(`${lang}/`))
+).sort(byOrder)
+const achievements = (await getCollection('achievements'))
+  .sort(byOrder)
+  .map(({ data }) => ({ data: localize(data, lang) }))
+const skills = site.skills.map((skill) => localize(skill, lang))
+---
+
+<MainLayout lang={lang} oyen="scene">
+  <main>
+    <header>
+      <LangSwitch lang={lang} side />
+      <h1>{site.name}</h1>
+      <p class="role">{role}</p>
+      <p class="line">{tagline}</p>
+      <nav class="links">
+        {site.links.map(({ label, url }) => (
+          <a href={url}>{label}</a>
+        ))}
+      </nav>
+    </header>
+
+    <h2>{t.experience}</h2>
+    <ul class="xp">
+      {experience.map(({ data }) => (
+        <li data-say={data.say}>
+          <b>{data.role}</b>
+          <span class="mono">{data.period}</span>
+          <span class="where">
+            {data.company} · {data.place}
+          </span>
+          <p>{data.summary}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>{t.work}</h2>
+    <ul class="work">
+      {projects.map(({ id, data }) => (
+        <li>
+          <a href={`/${id.replace('/', '/projects/')}/`} data-say={data.say}>
+            <b>{data.title}</b>
+            <span class:list={['mono', { win: data.highlight }]}>
+              {data.meta}
+            </span>
+            <p>{data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <h2>{t.awards}</h2>
+    <ul class="xp">
+      {achievements.map(({ data }) => (
+        <li data-say={data.say}>
+          <b>{data.title}</b>
+          <span class="mono">{data.when}</span>
+          <span class="where">
+            {data.org} · {data.place}
+          </span>
+          <p>{data.summary}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>{t.skills}</h2>
+    <ul class="xp">
+      {skills.map(({ title, text }) => (
+        <li>
+          <b>{title}</b>
+          <p>{text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2>{t.about}</h2>
+    <p class="now">{t.aboutWork}</p>
+    <p class="now">{t.aboutOyen}</p>
+
+    <footer class="mono">
+      {`© ${new Date().getFullYear()} ${site.name} · ${t.footer}`}
+    </footer>
+  </main>
+</MainLayout>
+
+<style>
+  header > :global(.lang) {
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    width: min-content;
+    font-size: clamp(52px, 10vw, 112px);
+    line-height: 0.9;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+  }
+
+  .role {
+    margin-top: 22px;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .line {
+    max-width: 34ch;
+    margin-top: 10px;
+    font-size: 20px;
+    color: var(--muted);
+  }
+
+  .work,
+  .xp {
+    padding: 0;
+    list-style: none;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .work a,
+  .xp li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 20px;
+    align-items: baseline;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .work a {
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .work a:hover,
+  .work a:focus-visible {
+    transform: translateX(12px);
+  }
+
+  .work b {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .work a:hover b,
+  .work .win {
+    color: var(--beak-text);
+  }
+
+  .xp b {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .where,
+  .work p,
+  .xp p {
+    grid-column: 1 / -1;
+    max-width: 65ch;
+  }
+
+  .where {
+    color: var(--beak-text);
+  }
+
+  .work p,
+  .xp p {
+    color: var(--muted);
+  }
+
+  .work .mono,
+  .xp .mono {
+    grid-row: 1;
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .now {
+    max-width: 52ch;
+    font-size: 20px;
+  }
+
+  .now + .now {
+    margin-top: 14px;
+    color: var(--muted);
+  }
+
+  footer {
+    margin-top: 84px;
+  }
+
+  @media (max-width: 1100px) {
+    header {
+      padding-top: 20px;
+    }
+
+    main {
+      max-width: 740px;
+      margin-top: var(--scene-band);
+      padding-top: 0;
+      padding-bottom: 160px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .work a,
+    .xp li {
+      grid-template-columns: 1fr;
+    }
+
+    .work .mono,
+    .xp .mono {
+      grid-row: auto;
+      grid-column: 1;
+      text-align: left;
+    }
+  }
+</style>

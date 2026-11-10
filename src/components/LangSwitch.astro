@@ -1,0 +1,168 @@
+---
+import { languages, langs, type Lang } from '../data/ui'
+
+interface Props {
+  lang: Lang
+  side?: boolean
+}
+
+const { lang: current, side = false } = Astro.props
+const href = (lang: Lang) => Astro.url.pathname.replace(/^\/\w+/, `/${lang}`)
+---
+
+<div class:list={['lang', { side }]}>
+  <details>
+    <summary>
+      {languages[current]}
+      <svg viewBox="0 0 10 6" aria-hidden="true">
+        <path d="M1 1l4 4 4-4"></path>
+      </svg>
+    </summary>
+    <ul>
+      {langs.map((lang) => (
+        <li>
+          <a
+            href={href(lang)}
+            lang={lang}
+            aria-current={lang === current ? 'page' : undefined}
+          >
+            {languages[lang]}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </details>
+  <select aria-label="language">
+    {langs.map((lang) => (
+      <option value={href(lang)} lang={lang} selected={lang === current}>
+        {languages[lang]}
+      </option>
+    ))}
+  </select>
+</div>
+
+<script>
+  document.querySelectorAll('.lang').forEach((root) => {
+    const menu = root.querySelector('details')!
+    const select = root.querySelector('select')!
+
+    select.addEventListener('change', () => (location.href = select.value))
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target as Node)) menu.open = false
+    })
+  })
+</script>
+
+<style>
+  .lang {
+    position: relative;
+    width: max-content;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    list-style: none;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover,
+  [open] summary {
+    opacity: 1;
+  }
+
+  svg {
+    width: 8px;
+    height: 5px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    transition: transform 0.2s;
+  }
+
+  [open] svg {
+    transform: rotate(180deg);
+  }
+
+  ul {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: -13px;
+    z-index: 4;
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+    border: 1px solid rgb(20 32 43 / 0.14);
+    border-radius: 10px;
+    background: var(--ice);
+    animation: fade-in 0.15s ease-out;
+  }
+
+  ul a {
+    display: block;
+    padding: 4px 8px;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+
+  ul a:hover,
+  ul a[aria-current] {
+    color: var(--beak-text);
+  }
+
+  .side ul {
+    top: 50%;
+    left: calc(100% + 10px);
+    display: flex;
+    translate: 0 -50%;
+  }
+
+  .side svg {
+    transform: rotate(-90deg);
+  }
+
+  .side [open] svg {
+    transform: rotate(90deg);
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  select {
+    display: none;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    details {
+      display: none;
+    }
+
+    select {
+      display: block;
+      padding: 5px 30px 5px 12px;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      appearance: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2314202b' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")
+        right 12px center / 10px 6px no-repeat;
+      color: var(--ink);
+      font: inherit;
+    }
+  }
+</style>

@@ -59,6 +59,6 @@ My teammate built the weather and fishing spot cards.
 
 Breeze took third place in the coastal big data platform track at DIVE 2025.
 
-![The three of us on stage at DIVE 2025 in Busan, holding the third-place sign for the coastal big data platform track.](../../images/breeze-third-place.jpeg)
+![The three of us on stage at DIVE 2025 in Busan, holding the third-place sign for the coastal big data platform track.](../../../images/breeze-third-place.jpeg)
 
 <p class="caption">Third place at DIVE 2025, Busan.</p>

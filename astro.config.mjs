@@ -69,7 +69,9 @@ const mermaid = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://yamazhen.dev',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', ko: 'ko' } } }),
+  ],
   vite: {
     optimizeDeps: { include: ['three'] },
   },
@@ -86,7 +88,7 @@ export default defineConfig({
       weights: ['400 800'],
       styles: ['normal'],
       subsets: ['latin'],
-      fallbacks: ['system-ui', 'sans-serif'],
+      fallbacks: ['var(--font-noto-kr,system-ui)', 'system-ui', 'sans-serif'],
       options: { experimental: { variableAxis: { opsz: [['12', '96']] } } },
     },
     {
@@ -96,7 +98,21 @@ export default defineConfig({
       weights: [400, 500],
       styles: ['normal'],
       subsets: ['latin'],
-      fallbacks: ['ui-monospace', 'monospace'],
+      fallbacks: ['var(--font-ko-mono,ui-monospace)', 'monospace'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Noto Sans KR',
+      cssVariable: '--font-noto-kr',
+      weights: ['100 900'],
+      fallbacks: [],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Nanum Gothic Coding',
+      cssVariable: '--font-ko-mono',
+      weights: [400],
+      fallbacks: [],
     },
   ],
 })

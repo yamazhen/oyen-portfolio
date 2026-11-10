@@ -1,14 +1,18 @@
 ---
 import { Font } from 'astro:assets'
+import { langs, type Lang } from '../data/ui'
 
 interface Props {
+  lang: Lang
   title: string
   description: string
 }
 
-const { title, description } = Astro.props
+const { lang, title, description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const ogImage = new URL('/seo-banner.webp', Astro.site)
+const inLang = (other: Lang) =>
+  new URL(Astro.url.pathname.replace(/^\/\w+/, `/${other}`), Astro.site)
 ---
 
 <meta charset="utf-8" />
@@ -19,12 +23,21 @@ const ogImage = new URL('/seo-banner.webp', Astro.site)
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{langs.map((other) => (
+  <link rel="alternate" hreflang={other} href={inLang(other)} />
+))}
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 <Font cssVariable="--font-bricolage" preload />
 <Font cssVariable="--font-jetbrains-mono" />
+{lang === 'ko' && (
+  <>
+    <Font cssVariable="--font-noto-kr" />
+    <Font cssVariable="--font-ko-mono" />
+  </>
+)}
 
 <!-- web analytics -->
 <script

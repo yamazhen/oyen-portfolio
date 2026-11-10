@@ -23,6 +23,10 @@ body {
   font-size: 18px;
 }
 
+:lang(ko) {
+  word-break: keep-all;
+}
+
 ::selection {
   background: var(--beak-text);
   color: #fff;

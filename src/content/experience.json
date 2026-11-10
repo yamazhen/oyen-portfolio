@@ -7,7 +7,14 @@
     "period": "Oct 2025 - now",
     "place": "on-site, Korea",
     "summary": "Build and maintain Digital Product Passport platforms for the footwear and automotive industries, and build dataspaces within the Gaia-X, Pontus-X and Catena-X ecosystems. Also set up GitLab CI/CD and monitoring across the company's projects.",
-    "say": "the current job!"
+    "say": "the current job!",
+    "ko": {
+      "role": "풀스택 개발자",
+      "period": "2025년 10월 - 현재",
+      "place": "한국, 사무실 근무",
+      "summary": "신발 및 자동차 산업을 위한 디지털 제품 여권(DPP) 플랫폼을 구축하고 운영하며, Gaia-X, Pontus-X, Catena-X 생태계에서 데이터 스페이스를 구축합니다. 회사 전체 프로젝트의 GitLab CI/CD와 모니터링도 구축했습니다.",
+      "say": "지금 다니는 회사!"
+    }
   },
   {
     "id": "containerverse",
@@ -17,6 +24,13 @@
     "period": "Jul 2024 - Oct 2025",
     "place": "remote, Malaysia",
     "summary": "Built custom systems for client companies, from their requirements through to production, and maintained existing codebases. Among them, a broadband system for Sunway University students. Done alongside a full-time degree.",
-    "say": "while studying?"
+    "say": "while studying?",
+    "ko": {
+      "role": "풀스택 개발자, 파트타임",
+      "period": "2024년 7월 - 2025년 10월",
+      "place": "원격, 말레이시아",
+      "summary": "고객사의 요구사항 정리부터 프로덕션 배포까지 맞춤형 시스템을 구축하고, 기존 코드베이스를 유지보수했습니다. Sunway University 학생용 인터넷 서비스 시스템도 그중 하나입니다. 대학 정규 과정과 병행했습니다.",
+      "say": "공부하면서?"
+    }
   }
 ]

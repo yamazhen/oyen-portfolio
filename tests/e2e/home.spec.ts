@@ -3,7 +3,7 @@ import { site } from '../../src/data/site'
 import { bubble, listUnder, waitForGreeting } from './helpers'
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/en/')
 })
 
 test('shows who bowen is and every section', async ({ page }) => {
@@ -37,7 +37,7 @@ test('lists the selected projects in order, each linking to its page', async ({
     'Breeze',
   ])
   for (const [i, id] of ['oid4vc', 'sdcj', 'soma', 'breeze'].entries()) {
-    await expect(projects.nth(i)).toHaveAttribute('href', `/projects/${id}/`)
+    await expect(projects.nth(i)).toHaveAttribute('href', `/en/projects/${id}/`)
   }
 })
 

@@ -76,7 +76,7 @@ flowchart TD
 
 I led a team of three at Gaia-X Tech-X & Hackathon #9 in Athens in May 2026, with a colleague from Circular Solution and a developer from smartSense Consulting Solutions. The project took second place, as "Selective-Disclosure Cross-Jurisdiction Identity Credentials for Gaia-X", and the work then went into the Gaia-X Danube release.
 
-![On stage at Gaia-X Tech-X & Hackathon #9 in Athens, holding the €3,000 second-place cheque with teammates, in front of the project title on screen.](../../images/sdcj-second-place.jpeg)
+![On stage at Gaia-X Tech-X & Hackathon #9 in Athens, holding the €3,000 second-place cheque with teammates, in front of the project title on screen.](../../../images/sdcj-second-place.jpeg)
 
 <p class="caption">Collecting second place in Athens.</p>
 

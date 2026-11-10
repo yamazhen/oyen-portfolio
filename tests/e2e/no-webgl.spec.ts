@@ -7,7 +7,7 @@ test.use({
 })
 
 test('the page still works when the browser has no webgl', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/en/')
 
   await expect(page.locator('#scene')).toHaveCount(0)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(site.name)

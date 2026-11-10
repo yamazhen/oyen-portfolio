@@ -10,7 +10,7 @@ test('the link preview image exists and is described', async ({
   page,
   request,
 }) => {
-  await page.goto('/')
+  await page.goto('/en/')
   const image = page.locator('meta[property="og:image"]')
   const alt = page.locator('meta[property="og:image:alt"]')
 

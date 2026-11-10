@@ -2,7 +2,7 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { getCollection } from 'astro:content'
 import { Window, type Document } from 'happy-dom'
 import { beforeAll, describe, expect, it } from 'vitest'
-import Home from '../../src/pages/index.astro'
+import Home from '../../src/pages/[lang]/index.astro'
 
 type Ordered = { data: { order: number } }
 const inOrder = <T extends Ordered>(entries: T[]) =>
@@ -14,7 +14,9 @@ beforeAll(async () => {
   const container = await AstroContainer.create({
     astroConfig: { site: 'https://yamazhen.dev' },
   })
-  const html = await container.renderToString(Home)
+  const html = await container.renderToString(Home, {
+    props: { lang: 'en' },
+  })
   const window = new Window()
   page = new window.DOMParser().parseFromString(html, 'text/html')
 })
@@ -47,11 +49,13 @@ describe('home page', () => {
   })
 
   it('links every project to its own page, in order', async () => {
-    const projects = inOrder(await getCollection('projects'))
+    const projects = inOrder(
+      await getCollection('projects', ({ id }) => id.startsWith('en/'))
+    )
     const links = itemsUnder('selected work').map((li) => li.querySelector('a'))
 
     expect(links.map((a) => a?.getAttribute('href'))).toEqual(
-      projects.map(({ id }) => `/projects/${id}/`)
+      projects.map(({ id }) => `/${id.replace('/', '/projects/')}/`)
     )
     expect(titlesUnder('selected work')).toEqual(
       projects.map(({ data }) => data.title)
@@ -59,7 +63,9 @@ describe('home page', () => {
   })
 
   it('marks award-winning projects', async () => {
-    const projects = inOrder(await getCollection('projects'))
+    const projects = inOrder(
+      await getCollection('projects', ({ id }) => id.startsWith('en/'))
+    )
     const marked = itemsUnder('selected work').map(
       (li) => !!li.querySelector('.win')
     )

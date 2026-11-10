@@ -4,6 +4,7 @@ import { defineConfig, fontProviders } from 'astro/config'
 import { unified } from '@astrojs/markdown-remark'
 import sitemap from '@astrojs/sitemap'
 import rehypeMermaid from 'rehype-mermaid'
+import { langs } from './src/data/ui'
 
 const INK = '#14202b'
 const ICE = '#eef3f6'
@@ -69,7 +70,15 @@ const mermaid = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://yamazhen.dev',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => langs.some((lang) => page.includes(`/${lang}/`)),
+      i18n: {
+        defaultLocale: 'en',
+        locales: Object.fromEntries(langs.map((lang) => [lang, lang])),
+      },
+    }),
+  ],
   vite: {
     optimizeDeps: { include: ['three'] },
   },
@@ -86,7 +95,7 @@ export default defineConfig({
       weights: ['400 800'],
       styles: ['normal'],
       subsets: ['latin'],
-      fallbacks: ['system-ui', 'sans-serif'],
+      fallbacks: ['var(--font-noto-kr,system-ui)', 'system-ui', 'sans-serif'],
       options: { experimental: { variableAxis: { opsz: [['12', '96']] } } },
     },
     {
@@ -96,7 +105,23 @@ export default defineConfig({
       weights: [400, 500],
       styles: ['normal'],
       subsets: ['latin'],
-      fallbacks: ['ui-monospace', 'monospace'],
+      fallbacks: ['var(--font-ko-mono,ui-monospace)', 'monospace'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Noto Sans KR',
+      cssVariable: '--font-noto-kr',
+      weights: ['100 900'],
+      styles: ['normal'],
+      fallbacks: [],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Nanum Gothic Coding',
+      cssVariable: '--font-ko-mono',
+      weights: [400],
+      styles: ['normal'],
+      fallbacks: [],
     },
   ],
 })

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { createBubble } from './bubble'
-import { GREETING, QUIPS } from './lines'
+import type { Lang } from '../../data/ui'
+import { LINES } from './lines'
 import { createMotion } from './motion'
 import { createPenguin } from './penguin'
 import { createCornerView, createMainView } from './views'
@@ -13,6 +14,8 @@ const SPEECH_ANCHOR = { x: -0.85, aboveCentre: 1.75, z: 0.5 }
 const sceneEl = document.getElementById('scene')
 const bubbleEl = document.getElementById('bubble')!
 const miniEl = document.getElementById('mini') as HTMLCanvasElement
+const { greeting, quips } =
+  LINES[document.documentElement.lang as Lang] ?? LINES.en
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 
 function start() {
@@ -44,7 +47,7 @@ function start() {
   }
 
   const sayQuip = () => {
-    bubble.say(QUIPS[quip++ % QUIPS.length])
+    bubble.say(quips[quip++ % quips.length])
     motion.react()
   }
 
@@ -73,7 +76,7 @@ function start() {
   })
   miniEl.addEventListener('click', sayQuip)
 
-  if (main) setTimeout(() => bubble.say(GREETING), GREETING_DELAY_MS)
+  if (main) setTimeout(() => bubble.say(greeting), GREETING_DELAY_MS)
 
   function frame() {
     requestAnimationFrame(frame)

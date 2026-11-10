@@ -35,7 +35,7 @@ The note editor works like a personal wiki: notes can link to each other, carry 
 
 Soma grew out of Quizify, an earlier web app of mine. You uploaded a PDF of study material, or typed a prompt, and it generated a test for you.
 
-![Soma's home screen: study streak, total notes, quiz average and flashcard count, with recent activity and quick actions below.](../../images/soma-home.png)
+![Soma's home screen: study streak, total notes, quiz average and flashcard count, with recent activity and quick actions below.](../../../images/soma-home.png)
 
 <p class="caption">The home screen.</p>
 

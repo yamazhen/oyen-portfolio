@@ -1,26 +1,29 @@
 ---
 import Head from './Head.astro'
 import Oyen from '../components/Oyen.astro'
+import { ui, type Lang } from '../data/ui'
 import '../styles/reset.css'
 import '../styles/global.css'
 import '../styles/prose.css'
 
 interface Props {
+  lang: Lang
   title?: string
   description?: string
   oyen?: 'scene' | 'corner'
 }
 
 const {
+  lang,
   title = 'Bowen Chong',
-  description = "Bowen Chong's portfolio: full-stack developer working on dataspaces and verifiable credentials.",
+  description = ui[lang].description,
   oyen,
 } = Astro.props
 ---
 
-<html lang="en">
+<html lang={lang}>
   <head>
-    <Head title={title} description={description} />
+    <Head lang={lang} title={title} description={description} />
   </head>
   <body data-oyen={oyen}>
     <slot />

@@ -1,14 +1,17 @@
 ---
 import { Font } from 'astro:assets'
+import { langs, localePath, type Lang } from '../data/ui'
 
 interface Props {
+  lang: Lang
   title: string
   description: string
 }
 
-const { title, description } = Astro.props
-const canonical = new URL(Astro.url.pathname, Astro.site)
+const { lang, title, description } = Astro.props
 const ogImage = new URL('/seo-banner.webp', Astro.site)
+const alternate = (other: Lang) =>
+  new URL(localePath(Astro.url.pathname, other), Astro.site)
 ---
 
 <meta charset="utf-8" />
@@ -18,13 +21,22 @@ const ogImage = new URL('/seo-banner.webp', Astro.site)
 />
 <title>{title}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
+<link rel="canonical" href={alternate(lang)} />
+{langs.map((other) => (
+  <link rel="alternate" hreflang={other} href={alternate(other)} />
+))}
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 <Font cssVariable="--font-bricolage" preload />
 <Font cssVariable="--font-jetbrains-mono" />
+{lang === 'ko' && (
+  <>
+    <Font cssVariable="--font-noto-kr" />
+    <Font cssVariable="--font-ko-mono" />
+  </>
+)}
 
 <!-- web analytics -->
 <script
@@ -36,7 +48,7 @@ const ogImage = new URL('/seo-banner.webp', Astro.site)
 <!-- open graph tags -->
 <meta property="og:title" content={title} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={canonical} />
+<meta property="og:url" content={alternate(lang)} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
 <meta

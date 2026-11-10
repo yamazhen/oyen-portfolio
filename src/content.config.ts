@@ -5,7 +5,7 @@ import { z } from 'astro/zod'
 const link = z.object({ label: z.string(), url: z.string() })
 
 const projects = defineCollection({
-  loader: glob({ base: './src/content/projects', pattern: '*.md' }),
+  loader: glob({ base: './src/content/projects', pattern: '*/*.md' }),
   schema: z.object({
     title: z.string(),
     order: z.number(),
@@ -19,9 +19,12 @@ const projects = defineCollection({
   }),
 })
 
+const withKorean = <T extends z.ZodRawShape>(shape: T) =>
+  z.object(shape).extend({ ko: z.object(shape).partial().optional() })
+
 const experience = defineCollection({
   loader: file('src/content/experience.json'),
-  schema: z.object({
+  schema: withKorean({
     order: z.number(),
     role: z.string(),
     company: z.string(),
@@ -34,7 +37,7 @@ const experience = defineCollection({
 
 const achievements = defineCollection({
   loader: file('src/content/achievements.json'),
-  schema: z.object({
+  schema: withKorean({
     order: z.number(),
     title: z.string(),
     org: z.string(),

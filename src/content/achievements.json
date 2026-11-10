@@ -7,7 +7,14 @@
     "when": "2023 - 2025",
     "place": "Busan",
     "summary": "CGPA 4.13 / 4.5. Outstanding Student Award, 2025.",
-    "say": "i motivated him!"
+    "say": "i motivated him!",
+    "ko": {
+      "title": "컴퓨터공학 학사",
+      "org": "동서대학교",
+      "place": "부산",
+      "summary": "평점 4.13 / 4.5. 2025년 우수학생상.",
+      "say": "내가 응원해 줬어!"
+    }
   },
   {
     "id": "gaia-x-tech-x-9",
@@ -16,7 +23,12 @@
     "org": "Gaia-X Tech-X & Hackathon #9",
     "when": "2026",
     "place": "Athens",
-    "summary": "Selective-Disclosure Cross-Jurisdiction (SDCJ) credentials. The work went into the Gaia-X Danube release."
+    "summary": "Selective-Disclosure Cross-Jurisdiction (SDCJ) credentials. The work went into the Gaia-X Danube release.",
+    "ko": {
+      "title": "2위",
+      "place": "아테네",
+      "summary": "선택적 공개가 가능한 국가 간 신원 자격증명(SDCJ). 이 작업은 Gaia-X Danube 릴리스에 포함되었습니다."
+    }
   },
   {
     "id": "dive-2025",
@@ -25,7 +37,13 @@
     "org": "DIVE 2025 Hackathon",
     "when": "2025",
     "place": "Busan",
-    "summary": "Track challenge, with a smartwatch app for coastal statistics."
+    "summary": "Track challenge, with a smartwatch app for coastal statistics.",
+    "ko": {
+      "title": "3위",
+      "org": "DIVE 2025 해커톤",
+      "place": "부산",
+      "summary": "트랙 챌린지 부문, 연안 데이터를 활용한 스마트워치 앱."
+    }
   },
   {
     "id": "kicsp",
@@ -34,6 +52,12 @@
     "org": "KICSP Conference",
     "when": "2024, 2025",
     "place": "Busan",
-    "summary": "Twice: automated question generation with Gemini, and an AI study-support desktop application."
+    "summary": "Twice: automated question generation with Gemini, and an AI study-support desktop application.",
+    "ko": {
+      "title": "우수논문상",
+      "org": "KICSP 학술대회",
+      "place": "부산",
+      "summary": "두 차례 수상: Gemini를 활용한 자동 문제 생성, 그리고 AI 기반 학습 지원 데스크톱 애플리케이션."
+    }
   }
 ]

@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content'
 import LangSwitch from '../../../components/LangSwitch.astro'
 import MainLayout from '../../../layouts/MainLayout.astro'
 import { site } from '../../../data/site'
-import { langs, ui } from '../../../data/ui'
+import { langs, projectPath, projectSlug, ui } from '../../../data/ui'
 import { byOrder } from '../../../lib/order'
 
 export async function getStaticPaths() {
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
   return langs.flatMap((lang) => {
     const own = projects.filter(({ id }) => id.startsWith(`${lang}/`))
     return own.map((project, i) => ({
-      params: { lang, id: project.id.slice(3) },
+      params: { lang, id: projectSlug(project.id) },
       props: { lang, project, previous: own[i - 1], next: own[i + 1] },
     }))
   })
@@ -19,8 +19,6 @@ export async function getStaticPaths() {
 
 const { lang, project, previous, next } = Astro.props
 const t = ui[lang]
-const href = (entry: typeof project) =>
-  `/${entry.id.replace('/', '/projects/')}/`
 const { title, lede, facts, links, say } = project.data
 const { Content } = await render(project)
 ---
@@ -63,13 +61,13 @@ const { Content } = await render(project)
 
     <nav class="pager">
       {previous && (
-        <a href={href(previous)}>
+        <a href={projectPath(previous.id)}>
           <span>{t.previous}</span>
           <b>{previous.data.title}</b>
         </a>
       )}
       {next && (
-        <a class="next" href={href(next)}>
+        <a class="next" href={projectPath(next.id)}>
           <span>{t.next}</span>
           <b>{next.data.title}</b>
         </a>

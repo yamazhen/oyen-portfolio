@@ -70,7 +70,10 @@ const mermaid = {
 export default defineConfig({
   site: 'https://yamazhen.dev',
   integrations: [
-    sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', ko: 'ko' } } }),
+    sitemap({
+      filter: (page) => /\/(en|ko)\//.test(page),
+      i18n: { defaultLocale: 'en', locales: { en: 'en', ko: 'ko' } },
+    }),
   ],
   vite: {
     optimizeDeps: { include: ['three'] },

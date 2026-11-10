@@ -1,5 +1,5 @@
 ---
-import { languages, langs, type Lang } from '../data/ui'
+import { languages, langs, localePath, type Lang } from '../data/ui'
 
 interface Props {
   lang: Lang
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { lang: current, side = false } = Astro.props
-const href = (lang: Lang) => Astro.url.pathname.replace(/^\/\w+/, `/${lang}`)
+const href = (lang: Lang) => localePath(Astro.url.pathname, lang)
 ---
 
 <div class:list={['lang', { side }]}>
@@ -32,7 +32,7 @@ const href = (lang: Lang) => Astro.url.pathname.replace(/^\/\w+/, `/${lang}`)
       ))}
     </ul>
   </details>
-  <select aria-label="language">
+  <select aria-label="language" autocomplete="off">
     {langs.map((lang) => (
       <option value={href(lang)} lang={lang} selected={lang === current}>
         {languages[lang]}

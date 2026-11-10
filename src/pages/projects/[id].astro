@@ -1,11 +1,12 @@
 ---
 import { getCollection } from 'astro:content'
+import { projectSlug } from '../../data/ui'
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ id }) =>
     id.startsWith('en/')
   )
-  return projects.map(({ id }) => ({ params: { id: id.slice(3) } }))
+  return projects.map(({ id }) => ({ params: { id: projectSlug(id) } }))
 }
 ---
 

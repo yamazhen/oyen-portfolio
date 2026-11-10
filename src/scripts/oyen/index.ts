@@ -14,7 +14,7 @@ const sceneEl = document.getElementById('scene')
 const bubbleEl = document.getElementById('bubble')!
 const miniEl = document.getElementById('mini') as HTMLCanvasElement
 const { greeting, quips } =
-  LINES[document.documentElement.lang as keyof typeof LINES]
+  LINES[document.documentElement.lang as keyof typeof LINES] ?? LINES.en
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 
 function start() {

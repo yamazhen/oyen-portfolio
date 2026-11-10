@@ -1,6 +1,6 @@
 ---
 import { Font } from 'astro:assets'
-import { langs, type Lang } from '../data/ui'
+import { langs, localePath, type Lang } from '../data/ui'
 
 interface Props {
   lang: Lang
@@ -12,7 +12,7 @@ const { lang, title, description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const ogImage = new URL('/seo-banner.webp', Astro.site)
 const inLang = (other: Lang) =>
-  new URL(Astro.url.pathname.replace(/^\/\w+/, `/${other}`), Astro.site)
+  new URL(localePath(Astro.url.pathname, other), Astro.site)
 ---
 
 <meta charset="utf-8" />

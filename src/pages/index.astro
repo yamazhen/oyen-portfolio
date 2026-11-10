@@ -1,7 +1,20 @@
+---
+import { site } from '../data/site'
+import { ui } from '../data/ui'
+---
+
+<title>{site.name}</title>
+<meta name="description" content={ui.en.description} />
+<meta property="og:title" content={site.name} />
+<meta property="og:description" content={ui.en.description} />
+<meta property="og:image" content={new URL('/seo-banner.webp', Astro.site)} />
+<link rel="canonical" href={new URL('/en/', Astro.site)} />
+
 <noscript>
   <meta http-equiv="refresh" content="0; url=/en/" />
 </noscript>
 
 <script>
-  location.replace(navigator.language.startsWith('ko') ? '/ko/' : '/en/')
+  const lang = navigator.language.startsWith('ko') ? 'ko' : 'en'
+  location.replace(`/${lang}/${location.search}${location.hash}`)
 </script>

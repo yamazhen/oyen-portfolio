@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import { Window, type Document } from 'happy-dom'
 import { beforeAll, describe, expect, it } from 'vitest'
 import Home from '../../src/pages/[lang]/index.astro'
+import { projectPath } from '../../src/data/ui'
 
 type Ordered = { data: { order: number } }
 const inOrder = <T extends Ordered>(entries: T[]) =>
@@ -55,7 +56,7 @@ describe('home page', () => {
     const links = itemsUnder('selected work').map((li) => li.querySelector('a'))
 
     expect(links.map((a) => a?.getAttribute('href'))).toEqual(
-      projects.map(({ id }) => `/${id.replace('/', '/projects/')}/`)
+      projects.map(({ id }) => projectPath(id))
     )
     expect(titlesUnder('selected work')).toEqual(
       projects.map(({ data }) => data.title)
